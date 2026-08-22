@@ -21,6 +21,7 @@ and Meet. What makes an app read as *Envisioning* — and nothing else.
 | `EnvisioningFont` | Envisioning Octa, registered at runtime |
 | `EnvisioningWelcomeShell` | shared first-launch mark, wordmark, card geometry, and version placement |
 | `EnvisioningWorkspaceTransition` | shared hand-off state after auth and before the workspace is ready |
+| `EnvisioningLockScreen` | shared biometric-lock cover, mark, spacing, button, and failure treatment |
 | `EnvisioningCopy` | canonical sign-in, loading, and common action labels |
 
 ## What is deliberately not in it
