@@ -75,6 +75,7 @@ public struct EnvisioningVersionLine: View {
         Text("Version \(marketing) · build \(build)")
             .font(.caption)
             .foregroundStyle(.secondary)
+            .accessibilityLabel("Version \(marketing), build \(build)")
     }
 }
 

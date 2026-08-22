@@ -34,6 +34,7 @@ public struct EnvisioningLockScreen: View {
             VStack(spacing: 6) {
                 Text("Envisioning is locked")
                     .font(.title3.weight(.semibold))
+                    .accessibilityAddTraits(.isHeader)
                 Text("Unlock with \(biometricTitle) to continue.")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
@@ -44,6 +45,7 @@ public struct EnvisioningLockScreen: View {
                     .font(.footnote)
                     .foregroundStyle(EnvisioningSemantics.danger)
                     .multilineTextAlignment(.center)
+                    .accessibilityLabel("Unlock error: \(failure)")
             }
             Button(action: unlock) {
                 Label(EnvisioningCopy.unlock, systemImage: biometricSymbolName)
@@ -52,6 +54,7 @@ public struct EnvisioningLockScreen: View {
             .buttonStyle(EnvisioningFilledButtonStyle())
             .controlSize(.large)
             .disabled(isAuthenticating)
+            .accessibilityHint("Authenticates with \(biometricTitle) or the device passcode")
             Spacer(minLength: 0)
         }
         .padding(24)
