@@ -132,6 +132,26 @@ final class EnvisioningUITests: XCTestCase {
         XCTAssertGreaterThan(contrast(EnvisioningAccent.foregroundOnDark, darkCanvas), 4.5)
     }
 
+    /// `auto` must hand SwiftUI nil, or the app pins itself to one theme and
+    /// stops following the device — which reads as a bug, not a preference.
+    func testAutoDefersToTheSystem() {
+        XCTAssertNil(EnvisioningAppearanceMode.auto.colorScheme)
+        XCTAssertEqual(EnvisioningAppearanceMode.light.colorScheme, .light)
+        XCTAssertEqual(EnvisioningAppearanceMode.dark.colorScheme, .dark)
+    }
+
+    /// An unset or corrupt key falls back to auto rather than to a hard theme.
+    func testUnknownStoredValueFallsBackToAuto() {
+        let defaults = UserDefaults(suiteName: "EnvisioningUITests.appearance")!
+        defaults.removeObject(forKey: "k")
+        XCTAssertEqual(.auto, EnvisioningAppearanceMode.mode(forKey: "k", defaults: defaults))
+        defaults.set("chartreuse", forKey: "k")
+        XCTAssertEqual(.auto, EnvisioningAppearanceMode.mode(forKey: "k", defaults: defaults))
+        defaults.set("dark", forKey: "k")
+        XCTAssertEqual(.dark, EnvisioningAppearanceMode.mode(forKey: "k", defaults: defaults))
+        defaults.removeObject(forKey: "k")
+    }
+
     private func contrast(_ a: Color, _ b: Color) -> Double {
         func luminance(_ c: Color) -> Double {
             #if canImport(UIKit)
