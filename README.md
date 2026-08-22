@@ -14,10 +14,14 @@ and Meet. What makes an app read as *Envisioning* — and nothing else.
 | `EnvisioningAccent` | the lime, its pressed and hovered states, and the ink that goes on it |
 | `EnvisioningFilledButtonStyle` | the brand CTA — lime fill, black ink, press outranks hover |
 | `EnvisioningBorderedButtonStyle` | its quiet sibling, on system surfaces |
+| `EnvisioningSignInButton` | one Envisioning identity label and loading state, with filled/bordered prominence |
 | `EnvisioningRadius` | 12 field, 14 control, 18 card |
 | `EnvisioningSemantics` | `danger`, `busy`, `publicEvent` |
 | `EnvisioningMark` | the EV glyph, as a `Shape` |
 | `EnvisioningFont` | Envisioning Octa, registered at runtime |
+| `EnvisioningWelcomeShell` | shared first-launch mark, wordmark, card geometry, and version placement |
+| `EnvisioningWorkspaceTransition` | shared hand-off state after auth and before the workspace is ready |
+| `EnvisioningCopy` | canonical sign-in, loading, and common action labels |
 
 ## What is deliberately not in it
 
@@ -101,10 +105,11 @@ code — but nothing shared can, or Meet cannot consume it.
 
 ## Tests
 
-Five, each pinning a claim this package makes rather than restating its code:
-Octa registers and all eighteen faces resolve by PostScript name; the mark stays
+The package tests pin the claims it makes rather than restating its code: Octa
+registers and all eighteen faces resolve by PostScript name; the mark stays
 square and centred in a non-square frame; the mark fills its square edge to edge;
-and black ink clears AA on all three accent states.
+black ink clears AA on all three accent states; and the light/dark foreground
+accent remains legible.
 
 ```
 swift test
