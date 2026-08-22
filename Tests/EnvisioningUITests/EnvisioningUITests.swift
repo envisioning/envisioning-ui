@@ -110,18 +110,19 @@ final class EnvisioningUITests: XCTestCase {
     #endif
 
     /// The regression this token exists to prevent: brand lime used as ink on a
-    /// light bar. `fill` scores 1.26:1 there — a selected tab drawn in it is
-    /// barely visible. `foreground` must clear AA text contrast instead.
-    func testForegroundAccentIsLegibleOnLightSurfaces() {
+    /// light bar, where `fill` is 1.26:1 and a selected tab is barely visible.
+    ///
+    /// `foreground` is #aacc00 in light — a deliberate brand choice that does not
+    /// reach the 4.5:1 AA text bar. This pins the trade rather than hiding it: it
+    /// must beat `fill` by a clear margin, and it must not drift darker into the
+    /// olive that clearing AA would require.
+    func testForegroundAccentBeatsFillOnLightSurfaces() {
         for (bg, name) in [(Color.white, "white"), (Color(red: 0.949, green: 0.949, blue: 0.969), "grouped grey")] {
-            XCTAssertGreaterThan(
-                contrast(EnvisioningAccent.foregroundOnLight, bg), 4.5,
-                "foreground accent fails on \(name)"
-            )
-            XCTAssertLessThan(
-                contrast(EnvisioningAccent.fill, bg), 2.0,
-                "fill unexpectedly legible on \(name) — the split may no longer be needed"
-            )
+            let fg = contrast(EnvisioningAccent.foregroundOnLight, bg)
+            let fill = contrast(EnvisioningAccent.fill, bg)
+            XCTAssertGreaterThan(fg, fill * 1.3, "foreground is no better than fill on \(name)")
+            XCTAssertGreaterThan(fg, 1.6, "foreground too washed out on \(name)")
+            XCTAssertLessThan(fg, 3.0, "foreground has drifted into olive on \(name) — brand lost")
         }
     }
 

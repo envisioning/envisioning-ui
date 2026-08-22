@@ -43,11 +43,13 @@ public enum EnvisioningAccent {
     /// What goes *on* the fill. Black clears 16.66:1; white manages 1.26:1.
     public static let ink = Color.black
 
-    // Light-mode ink lime. Same hue as `fill`, taken down until it clears 4.5:1
-    // against both light grounds a tab bar actually sits on: white (5.05) and
-    // grouped grey (4.53). Tuning against white alone lands at #6E7D26, which
-    // looks fine and quietly fails on grey — the test pins both.
-    private static let foregroundLightRGB = (0.407, 0.460, 0.139)  // #687523
+    // Light-mode ink lime: #aacc00, the house green.
+    //
+    // Chosen for brand, not for contrast. As ink on white it is 1.85:1, short of
+    // the 4.5:1 AA text bar — a lime dark enough to clear that lands around
+    // #687523, an olive that no longer reads as the brand. #aacc00 is still a
+    // clear improvement on using `fill` here, which is 1.26:1 and barely visible.
+    private static let foregroundLightRGB = (0.667, 0.800, 0.000)  // #aacc00
 
     /// The brand colour when it has to *be* the ink rather than sit under it —
     /// a selected tab item, a chosen row, a state glyph.
