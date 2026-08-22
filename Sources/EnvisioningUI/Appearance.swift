@@ -47,3 +47,30 @@ public enum EnvisioningAppearanceMode: String, CaseIterable, Hashable, Identifia
         return mode
     }
 }
+
+/// The canonical appearance control used inside an app's Appearance pane.
+public struct EnvisioningAppearancePicker: View {
+    @Binding private var selection: String
+
+    public init(selection: Binding<String>) {
+        _selection = selection
+    }
+
+    private var mode: EnvisioningAppearanceMode {
+        EnvisioningAppearanceMode(rawValue: selection) ?? .auto
+    }
+
+    public var body: some View {
+        Picker("Appearance", selection: $selection) {
+            ForEach(EnvisioningAppearanceMode.allCases) { mode in
+                Text(mode.title).tag(mode.rawValue)
+            }
+        }
+        .pickerStyle(.segmented)
+        .labelsHidden()
+
+        Text(mode.detail)
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+    }
+}

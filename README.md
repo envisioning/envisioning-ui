@@ -21,7 +21,14 @@ and Meet. What makes an app read as *Envisioning* — and nothing else.
 | `EnvisioningFont` | Envisioning Octa, registered at runtime |
 | `EnvisioningWelcomeShell` | shared first-launch mark, wordmark, card geometry, and version placement |
 | `EnvisioningWorkspaceTransition` | shared hand-off state after auth and before the workspace is ready |
+| `EnvisioningEntryGate` | shared signed-out → preparing → ready root state machine |
+| `EnvisioningLoadingState` / `EmptyState` / `RetryState` | canonical blocking and recoverable states |
+| `EnvisioningInlineRetry` | compact retry treatment for list rows and banners |
+| `EnvisioningHomeTabLabel` | canonical Home label with the EV tab glyph on iOS |
 | `EnvisioningLockScreen` | shared biometric-lock cover, mark, spacing, button, and failure treatment |
+| `EnvisioningSettingsShell` | shared Account / Preferences / Security / System navigation on iPhone, iPad, and Mac |
+| `EnvisioningAppearancePicker` | canonical Auto / Light / Dark control and explanatory copy |
+| `EnvisioningAppLockSection` | shared biometric-lock setting, errors, and security explanation |
 | `EnvisioningCopy` | canonical sign-in, loading, and common action labels |
 
 ## What is deliberately not in it
