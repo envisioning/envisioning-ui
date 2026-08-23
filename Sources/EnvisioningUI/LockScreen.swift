@@ -6,7 +6,12 @@ import SwiftUI
 /// The lock service remains app-owned because each app has its own preference
 /// and lifecycle. The presentation does not: mark, spacing, copy pattern,
 /// button treatment, failure colour, and system surface all come from here.
+///
+/// `appName` is required rather than read from `Bundle.main`, because a bundle
+/// display name is set for the Home Screen and does not always carry the
+/// spelling the app uses about itself.
 public struct EnvisioningLockScreen: View {
+    private let appName: String
     private let biometricTitle: String
     private let biometricSymbolName: String
     private let failure: String?
@@ -14,12 +19,14 @@ public struct EnvisioningLockScreen: View {
     private let unlock: () -> Void
 
     public init(
+        appName: String,
         biometricTitle: String,
         biometricSymbolName: String,
         failure: String?,
         isAuthenticating: Bool,
         unlock: @escaping () -> Void
     ) {
+        self.appName = appName
         self.biometricTitle = biometricTitle
         self.biometricSymbolName = biometricSymbolName
         self.failure = failure
@@ -32,7 +39,7 @@ public struct EnvisioningLockScreen: View {
             Spacer(minLength: 0)
             EnvisioningMark.view(size: 44)
             VStack(spacing: 6) {
-                Text("Envisioning is locked")
+                Text("\(appName) is locked")
                     .font(.title3.weight(.semibold))
                     .accessibilityAddTraits(.isHeader)
                 Text("Unlock with \(biometricTitle) to continue.")

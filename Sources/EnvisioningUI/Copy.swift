@@ -22,4 +22,16 @@ public enum EnvisioningCopy {
         "Removes this device’s session. You can sign in again with Envisioning."
     public static let done = "Done"
     public static let tryAgain = "Try again"
+
+    /// The system Face ID / Touch ID sheet renders nothing but this line, so it
+    /// has to name the app that is asking. A person with more than one
+    /// Envisioning app installed otherwise sees the same prompt from both.
+    public static func unlockReason(app: String) -> String {
+        "Unlock \(app)"
+    }
+
+    /// Same reason, for the two prompts that guard the setting itself.
+    public static func appLockReason(app: String, enabling: Bool) -> String {
+        enabling ? "Turn on the \(app) app lock" : "Turn off the \(app) app lock"
+    }
 }

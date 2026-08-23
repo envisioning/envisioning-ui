@@ -97,3 +97,21 @@ public enum EnvisioningAccent {
     public static let nsInk = NSColor.black
     #endif
 }
+
+
+/// Chrome the brand does not claim.
+///
+/// The accent is opted into by the control that earns it: a primary action, the
+/// selected tab item. Everything else stays legible — a toolbar gear, a view
+/// switcher, a navigation link. The top nav is never accented.
+///
+/// SwiftUI gives no way to tint a container without tinting its contents, so
+/// `.tint(EnvisioningAccent.foreground)` on a `TabView` reaches every toolbar
+/// button on every screen the tab bar opens. A screen inside an accented
+/// `TabView` therefore has to be put back deliberately. This is that, named
+/// once rather than spelled out at every leaf that noticed the problem.
+extension View {
+    public func neutralChrome() -> some View {
+        tint(Color.primary)
+    }
+}
