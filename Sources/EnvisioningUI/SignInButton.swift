@@ -6,7 +6,7 @@ public enum EnvisioningButtonProminence: Equatable {
 }
 
 /// The canonical Envisioning sign-in action. The prominence changes by context
-/// (CORE has only one action; MEET also offers guest joining), while its wording
+/// (Core has only one action; Meet also offers guest joining), while its wording
 /// and loading state remain identical.
 public struct EnvisioningSignInButton: View {
     private let isLoading: Bool

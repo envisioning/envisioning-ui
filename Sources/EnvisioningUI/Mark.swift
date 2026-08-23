@@ -3,8 +3,8 @@ import SwiftUI
 /// The EV mark: a seven-unit block and a tapered bar, on a 19.6-unit square.
 ///
 /// Geometry traced from `envisioning.com/public/images/logo/symbol.svg`. The two
-/// SVG copies that previously lived in the CORE and Meet repos were verified to be
-/// the *same* path — CORE's coordinates are these multiplied by 12.190476, matching
+/// SVG copies that previously lived in the Core and Meet repos were verified to be
+/// the *same* path — Core's coordinates are these multiplied by 12.190476, matching
 /// to 2.5e-5 — so nothing was lost by collapsing them to one definition here.
 ///
 /// A `Shape` rather than an asset, on purpose. Meet drew this in a `Canvas`, which

@@ -59,7 +59,7 @@ public enum EnvisioningAccent {
     /// no such problem: `fill` on `#1C1C1E` is 13.50:1, so dark keeps the lime.
     ///
     /// Light therefore uses a darkened lime of the same hue. That is the split
-    /// CORE's old light/dark accent was reaching for; its `#aacc00` only reached
+    /// Core's old light/dark accent was reaching for; its `#aacc00` only reached
     /// 1.85:1, which is why the swap never actually fixed anything.
     public static let foreground = adaptive(dark: fillRGB, light: foregroundLightRGB)
 
