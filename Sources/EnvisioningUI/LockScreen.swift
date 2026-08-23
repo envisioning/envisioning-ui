@@ -7,9 +7,9 @@ import SwiftUI
 /// and lifecycle. The presentation does not: mark, spacing, copy pattern,
 /// button treatment, failure colour, and system surface all come from here.
 ///
-/// `appName` is required rather than read from `Bundle.main`, because a bundle
-/// display name is set for the Home Screen and does not always carry the
-/// spelling the app uses about itself.
+/// `appName` is required rather than read from `Bundle.main`, because the lock
+/// covers more than the app target. An extension reads its own bundle name, and
+/// "Unlock Share Extension" is not what the person is unlocking.
 public struct EnvisioningLockScreen: View {
     private let appName: String
     private let biometricTitle: String
