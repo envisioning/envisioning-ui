@@ -1,6 +1,6 @@
 # EnvisioningUI
 
-The distinctive layer shared by [CORE](https://github.com/envisioning/CORE-Helper-App)
+The distinctive layer shared by [Core](https://github.com/envisioning/CORE-Helper-App)
 and Meet. What makes an app read as *Envisioning* — and nothing else.
 
 ```swift
@@ -68,7 +68,7 @@ One value in light and dark. Only the interaction state changes.
 A `Shape`, not an asset.
 
 The same glyph previously existed as four SVG files across the two repos. They were
-verified identical — CORE's coordinates are Meet's multiplied by 12.190476, agreeing
+verified identical — Core's coordinates are Meet's multiplied by 12.190476, agreeing
 to 2.5e-5 — so collapsing them to one path lost nothing.
 
 Drawing it as a `Shape` also fixes a limitation neither app had solved. Meet drew
@@ -108,7 +108,7 @@ the font repo, and this package should then track it.
 platforms: [.iOS(.v17), .macOS(.v14)]
 ```
 
-Meet's floor, not CORE's. CORE deploys to iOS 26.1 and may use newer API in its own
+Meet's floor, not Core's. Core deploys to iOS 26.1 and may use newer API in its own
 code — but nothing shared can, or Meet cannot consume it.
 
 ## Tests
