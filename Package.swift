@@ -12,7 +12,7 @@ let package = Package(
     ],
     dependencies: [
         // The typeface lives in the repo that builds it. One .ttf in the estate.
-        .package(url: "https://github.com/envisioning/envisioning-octa.git", exact: "0.1.0")
+        .package(url: "https://github.com/envisioning/envisioning-octa.git", exact: "0.1.1")
     ],
     targets: [
         .target(name: "EnvisioningUI", dependencies: [.product(name: "EnvisioningOcta", package: "envisioning-octa")]),
