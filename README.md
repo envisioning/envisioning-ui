@@ -25,7 +25,7 @@ and Meet. What makes an app read as *Envisioning* — and nothing else.
 | `EnvisioningLoadingState` / `EmptyState` / `RetryState` | canonical blocking and recoverable states |
 | `EnvisioningInlineRetry` | compact retry treatment for list rows and banners |
 | `EnvisioningHomeTabLabel` | canonical Home label with the EV tab glyph on iOS |
-| `EnvisioningLockScreen` | shared biometric-lock cover, mark, spacing, button, and failure treatment |
+| `EnvisioningLockScreen` | shared biometric-lock cover — quiet by design: glyph, one Unlock button, failure text only when there is one; the system sheet does the explaining |
 | `EnvisioningSettingsShell` | shared Account / Preferences / Security / System navigation on iPhone, iPad, and Mac |
 | `EnvisioningAppearancePicker` | canonical Auto / Light / Dark control and explanatory copy |
 | `EnvisioningAppLockSection` | shared biometric-lock setting, errors, and security explanation |
