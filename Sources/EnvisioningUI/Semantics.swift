@@ -2,10 +2,11 @@ import SwiftUI
 
 /// State colours the platform has no opinion about.
 ///
-/// Deliberately absent: `background`, `panel`, `elevated`, `field`, `border`,
-/// `primary`, `secondary`. Those are the system's job. Owning surfaces is what
-/// drifted Meet away from the platform in the first place, and re-owning them
-/// here would relocate the drift rather than remove it.
+/// Surfaces and text tones are next door in `EnvisioningSurface`. This file
+/// used to say they were "the system's job"; leaving them to the system is
+/// what put a neutral-gray Core pane inside a blue-tinted Meet window
+/// (envisioning/meet#140), so the estate now owns one ladder and every app
+/// stands on it.
 public enum EnvisioningSemantics {
     /// Destructive, failed, or live-and-should-not-be.
     public static let danger = adaptive(

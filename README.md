@@ -17,6 +17,7 @@ and Meet. What makes an app read as *Envisioning* — and nothing else.
 | `EnvisioningSignInButton` | one Envisioning identity label and loading state, with filled/bordered prominence |
 | `EnvisioningRadius` | 12 field, 14 control, 18 card |
 | `EnvisioningSemantics` | `danger`, `busy`, `publicEvent` |
+| `EnvisioningSurface` | the surface ladder — `canvas`, `panel`, `elevated`, `field`, borders, text tones — as `Color`, `NSColor` and `UIColor` from one table; `Token.hex(dark:)` for a stylesheet mirror |
 | `EnvisioningMark` | the EV glyph, as a `Shape` |
 | `EnvisioningFont` | Envisioning Octa, registered at runtime |
 | `EnvisioningWelcomeShell` | shared first-launch mark, wordmark, card geometry, and version placement |

@@ -170,4 +170,30 @@ final class EnvisioningUITests: XCTestCase {
         let la = luminance(a), lb = luminance(b)
         return (max(la, lb) + 0.05) / (min(la, lb) + 0.05)
     }
+
+    // MARK: Surface
+
+    func testSurfaceLadderMatchesTheDocumentedHexes() {
+        XCTAssertEqual(EnvisioningSurface.Token.canvas.hex(dark: true), "#202128")
+        XCTAssertEqual(EnvisioningSurface.Token.panel.hex(dark: true), "#292a32")
+        XCTAssertEqual(EnvisioningSurface.Token.elevated.hex(dark: true), "#343640")
+        XCTAssertEqual(EnvisioningSurface.Token.field.hex(dark: true), "#1a1b21")
+        XCTAssertEqual(EnvisioningSurface.Token.canvas.hex(dark: false), "#efefef")
+        XCTAssertEqual(EnvisioningSurface.Token.panel.hex(dark: false), "#f6f6f6")
+        XCTAssertEqual(EnvisioningSurface.Token.elevated.hex(dark: false), "#ffffff")
+        XCTAssertEqual(EnvisioningSurface.Token.field.hex(dark: false), "#e4e4e4")
+        XCTAssertEqual(EnvisioningSurface.Token.secondaryText.hex(dark: true), "#a3a3a3")
+        // Alpha rungs have no hex: a stylesheet spells them as rgb(... / a).
+        XCTAssertNil(EnvisioningSurface.Token.border.hex(dark: true))
+    }
+
+    func testSurfaceLadderDeepensRungByRung() {
+        // Dark: canvas < panel < elevated in luminance; field is the well below canvas.
+        let lum: (EnvisioningSurface.Token) -> Double = { t in
+            let v = t.rgba(dark: true); return v.red + v.green + v.blue
+        }
+        XCTAssertLessThan(lum(.field), lum(.canvas))
+        XCTAssertLessThan(lum(.canvas), lum(.panel))
+        XCTAssertLessThan(lum(.panel), lum(.elevated))
+    }
 }
