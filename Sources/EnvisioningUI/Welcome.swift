@@ -8,16 +8,22 @@ public struct EnvisioningWelcomeShell<Content: View>: View {
     private let subtitle: String
     private let content: Content
     private let showsVersionLine: Bool
+    private let environment: String?
 
+    /// `environment` names the server this build talks to ("Production",
+    /// "Local", a host). It is the first thing anybody is asked when they report
+    /// something, so it belongs on the same line as the build number.
     public init(
         productName: String,
         subtitle: String,
         showsVersionLine: Bool = true,
+        environment: String? = nil,
         @ViewBuilder content: () -> Content
     ) {
         self.productName = productName
         self.subtitle = subtitle
         self.showsVersionLine = showsVersionLine
+        self.environment = environment
         self.content = content()
     }
 
@@ -60,7 +66,7 @@ public struct EnvisioningWelcomeShell<Content: View>: View {
                     .background(.regularMaterial, in: Self.cardShape)
 
                 if showsVersionLine {
-                    EnvisioningVersionLine()
+                    EnvisioningVersionLine(environment: environment)
                         .padding(.top, 14)
                 }
 
@@ -75,16 +81,22 @@ public struct EnvisioningWelcomeShell<Content: View>: View {
 
 /// Shared version placement for first-launch and about surfaces.
 public struct EnvisioningVersionLine: View {
-    public init() {}
+    private let environment: String?
+
+    /// Pass the server name to append it: `Version 1.0.0 · Build 245 · Production`.
+    public init(environment: String? = nil) {
+        self.environment = environment
+    }
 
     public var body: some View {
         let marketing = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "–"
         let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "–"
+        let suffix = environment.map { " · " + $0 } ?? ""
 
-        Text("Version \(marketing) · build \(build)")
+        Text("Version \(marketing) · Build \(build)" + suffix)
             .font(.caption)
             .foregroundStyle(.secondary)
-            .accessibilityLabel("Version \(marketing), build \(build)")
+            .accessibilityLabel("Version \(marketing), build \(build)" + suffix.replacingOccurrences(of: " · ", with: ", "))
     }
 }
 
