@@ -21,10 +21,15 @@ public struct EnvisioningWelcomeShell<Content: View>: View {
         self.content = content()
     }
 
+    private static var cardShape: RoundedRectangle {
+        RoundedRectangle(cornerRadius: EnvisioningRadius.card, style: .continuous)
+    }
+
     public var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                Spacer(minLength: 24)
+                // 24 crowds the mark against the status bar on a phone.
+                Spacer(minLength: 56)
 
                 VStack(spacing: 12) {
                     EnvisioningMark.view(size: 44)
@@ -41,14 +46,18 @@ public struct EnvisioningWelcomeShell<Content: View>: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 24)
 
+                // The card is a container, and it has to say so: on iOS 26 the
+                // fields and buttons an app puts inside resolve their corners
+                // from the nearest `containerShape`. A `.background(_:in:)`
+                // alone paints the rounded card but declares no container, so
+                // every control inside rendered square (envisioning/meet, the
+                // first-run card). Keep the shape and the container in step.
                 content
                     .frame(maxWidth: 520, alignment: .leading)
                     .padding(.horizontal, 24)
                     .padding(.vertical, 28)
-                    .background(
-                        .regularMaterial,
-                        in: RoundedRectangle(cornerRadius: EnvisioningRadius.card, style: .continuous)
-                    )
+                    .containerShape(Self.cardShape)
+                    .background(.regularMaterial, in: Self.cardShape)
 
                 if showsVersionLine {
                     EnvisioningVersionLine()
