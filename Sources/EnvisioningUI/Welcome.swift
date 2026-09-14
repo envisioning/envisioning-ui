@@ -63,7 +63,11 @@ public struct EnvisioningWelcomeShell<Content: View>: View {
                     .padding(.horizontal, 24)
                     .padding(.vertical, 28)
                     .containerShape(Self.cardShape)
-                    .background(.regularMaterial, in: Self.cardShape)
+                    // The panel rung, not a system material: material blurs
+                    // the canvas into a neutral gray that reads as foreign
+                    // next to the slate ladder every other card uses.
+                    .background(EnvisioningSurface.panel, in: Self.cardShape)
+                    .overlay(Self.cardShape.stroke(EnvisioningSurface.border, lineWidth: 1))
 
                 if showsVersionLine {
                     EnvisioningVersionLine(environment: environment)
