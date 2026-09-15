@@ -1,7 +1,24 @@
 import SwiftUI
 
-/// A blocking initial load. In-place refreshes should keep their content and
-/// use the platform's smaller progress treatment instead.
+// Where a wait is drawn — the house rule, in order of preference:
+//
+// 1. Nothing. A screen with a snapshot paints it and refreshes behind it.
+// 2. `EnvisioningPlaceholderRows` in the section the answer will fill: a
+//    list on its first open keeps its shape, and the real rows land in place.
+//    Nothing ever floats over the content.
+// 3. A small `ProgressView` *in the control that is busy* — replacing a
+//    button's label, at the trailing end of the row whose action runs, in the
+//    last row while a next page loads. The row it belongs to, not the screen.
+// 4. `EnvisioningLoadingState`, centred with a label, only for a screen with
+//    nothing at all to show and no rows to stand in for — a modal wait like
+//    "Ending the meeting…", a connect in progress.
+//
+// Never a bare spinner over a list: it says nothing about where the answer
+// goes, and reads as detached from the content beneath it.
+
+/// A blocking wait for a screen with nothing at all to show (rule 4 above).
+/// A list waiting for its rows uses `EnvisioningPlaceholderRows` instead, and
+/// an in-place refresh keeps its content and shows nothing.
 public struct EnvisioningLoadingState: View {
     private let label: String
 
@@ -14,6 +31,70 @@ public struct EnvisioningLoadingState: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .accessibilityElement(children: .combine)
             .accessibilityLabel(label)
+    }
+}
+
+/// Rows at a row's height while a list waits for its first answer — a cold
+/// open with no snapshot. Put them inside the section whose rows they stand
+/// for, under `if isLoading && rows.isEmpty`, so the list keeps its shape and
+/// the answer lands in place. The bars are on the ladder (`border`), the same
+/// row the Mac's Home draws while a module waits.
+///
+/// Laid out at once, so the height is stable, but drawn only after `delay`:
+/// most answers land inside it, and a placeholder that flashes for 80 ms
+/// reads as a flicker, not a wait. Hidden from assistive technology — a row
+/// of bars says nothing; the screen's own title and the answer do the talking.
+public struct EnvisioningPlaceholderRows: View {
+    private let count: Int
+    private let delay: Duration
+
+    public init(count: Int = 3, delay: Duration = .milliseconds(250)) {
+        self.count = count
+        self.delay = delay
+    }
+
+    public var body: some View {
+        ForEach(0..<count, id: \.self) { index in
+            EnvisioningPlaceholderRow(delay: delay, variant: index)
+        }
+    }
+}
+
+/// One placeholder row: a glyph, a title bar, a detail bar. Widths step by
+/// `variant` so a stack of them reads as rows, not as a repeated tile.
+public struct EnvisioningPlaceholderRow: View {
+    private let delay: Duration
+    private let variant: Int
+    @State private var visible = false
+
+    public init(delay: Duration = .milliseconds(250), variant: Int = 0) {
+        self.delay = delay
+        self.variant = variant
+    }
+
+    public var body: some View {
+        HStack(alignment: .top, spacing: 10) {
+            bar(width: 16, height: 16)
+            VStack(alignment: .leading, spacing: 6) {
+                bar(width: [140, 110, 170][variant % 3], height: 12)
+                bar(width: [220, 190, 160][variant % 3], height: 10)
+            }
+        }
+        .padding(.vertical, 3)
+        .opacity(visible ? 1 : 0)
+        .accessibilityHidden(true)
+        .task {
+            try? await Task.sleep(for: delay)
+            guard !Task.isCancelled else { return }
+            withAnimation(.easeIn(duration: 0.18)) { visible = true }
+        }
+    }
+
+    private func bar(width: CGFloat, height: CGFloat) -> some View {
+        Capsule()
+            .fill(EnvisioningSurface.border)
+            .frame(maxWidth: width, alignment: .leading)
+            .frame(height: height)
     }
 }
 

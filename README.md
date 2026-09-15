@@ -23,7 +23,8 @@ and Meet. What makes an app read as *Envisioning* — and nothing else.
 | `EnvisioningWelcomeShell` | shared first-launch mark, wordmark, card geometry, and version placement |
 | `EnvisioningWorkspaceTransition` | shared hand-off state after auth and before the workspace is ready |
 | `EnvisioningEntryGate` | shared signed-out → preparing → ready root state machine |
-| `EnvisioningLoadingState` / `EmptyState` / `RetryState` | canonical blocking and recoverable states |
+| `EnvisioningPlaceholderRows` | rows at a row's height while a list waits for its first answer — the wait sits where the answer lands, never over it |
+| `EnvisioningLoadingState` / `EmptyState` / `RetryState` | canonical blocking and recoverable states; the loading one only for a screen with nothing to stand in for |
 | `EnvisioningInlineRetry` | compact retry treatment for list rows and banners |
 | `EnvisioningHomeTabLabel` | canonical Home label with the EV tab glyph on iOS |
 | `EnvisioningLockScreen` | shared biometric-lock cover — quiet by design: glyph, one Unlock button, failure text only when there is one; the system sheet does the explaining |
