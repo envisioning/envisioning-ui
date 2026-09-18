@@ -66,11 +66,58 @@ extension View {
 
     /// The container half: the system's scroll background off, the canvas
     /// on. Pair with `envisioningListRows()` on a list the wrappers cannot
-    /// build.
+    /// build. Reads `envisioningListSurface` from the environment: `.clear`
+    /// paints nothing, so a half-height sheet on iOS 26 shows its own glass
+    /// under the rows.
     public func envisioningListSurface() -> some View {
-        self
-            .scrollContentBackground(.hidden)
-            .background(EnvisioningSurface.canvas.ignoresSafeArea())
+        modifier(EnvisioningListSurfaceModifier())
+    }
+}
+
+/// What a list or form paints under its rows.
+public enum EnvisioningListSurface: Sendable {
+    /// The canvas rung, the default everywhere.
+    case canvas
+    /// Nothing. For content inside a container that draws its own ground —
+    /// a partial-height sheet on iOS 26. The navigation container's
+    /// background is cleared too, so a `NavigationStack` root does not
+    /// paint the system's opaque ground in its place.
+    case clear
+}
+
+private struct EnvisioningListSurfaceKey: EnvironmentKey {
+    static let defaultValue = EnvisioningListSurface.canvas
+}
+
+extension EnvironmentValues {
+    public var envisioningListSurface: EnvisioningListSurface {
+        get { self[EnvisioningListSurfaceKey.self] }
+        set { self[EnvisioningListSurfaceKey.self] = newValue }
+    }
+}
+
+private struct EnvisioningListSurfaceModifier: ViewModifier {
+    @Environment(\.envisioningListSurface) private var surface
+
+    func body(content: Content) -> some View {
+        switch surface {
+        case .canvas:
+            content
+                .scrollContentBackground(.hidden)
+                .background(EnvisioningSurface.canvas.ignoresSafeArea())
+        case .clear:
+            #if os(iOS)
+            if #available(iOS 18.0, *) {
+                content
+                    .scrollContentBackground(.hidden)
+                    .containerBackground(.clear, for: .navigation)
+            } else {
+                content.scrollContentBackground(.hidden)
+            }
+            #else
+            content.scrollContentBackground(.hidden)
+            #endif
+        }
     }
 }
 
