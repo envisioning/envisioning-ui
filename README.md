@@ -1,6 +1,6 @@
 # EnvisioningUI
 
-The distinctive layer shared by [Core](https://github.com/envisioning/CORE-Helper-App)
+The distinctive layer shared by Core
 and Meet. What makes an app read as *Envisioning* — and nothing else.
 
 ```swift
