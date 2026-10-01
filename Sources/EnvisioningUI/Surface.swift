@@ -46,8 +46,9 @@ public enum EnvisioningSurface {
         case border
         /// The same hairline under the pointer.
         case borderHover
-        /// A half-step stronger than `border`, for a control that must read
-        /// as a button at a glance rather than on hover.
+        /// Stronger than `border`, for a control that must read as a button at a
+        /// glance rather than on hover. White at 22% in dark and black at 24% in
+        /// light, the web's `--control-line` (envisioning/meet#599).
         case controlBorder
         case primaryText
         case secondaryText
@@ -70,8 +71,8 @@ public enum EnvisioningSurface {
             case (.border, false): return (0, 0, 0, 0.14)
             case (.borderHover, true): return (1, 1, 1, 0.20)
             case (.borderHover, false): return (0, 0, 0, 0.26)
-            case (.controlBorder, true): return (1, 1, 1, 0.16)
-            case (.controlBorder, false): return (0, 0, 0, 0.22)
+            case (.controlBorder, true): return (1, 1, 1, 0.22)
+            case (.controlBorder, false): return (0, 0, 0, 0.24)
             case (.primaryText, true): return (0.980, 0.980, 0.980, 1)
             case (.primaryText, false): return (0.102, 0.102, 0.102, 1)
             case (.secondaryText, true): return (0.639, 0.639, 0.639, 1)
