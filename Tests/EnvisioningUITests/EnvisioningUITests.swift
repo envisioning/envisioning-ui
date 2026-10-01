@@ -76,6 +76,18 @@ final class EnvisioningUITests: XCTestCase {
         XCTAssertLessThan(coverage, 0.75, "mark is a solid block — geometry is wrong")
     }
 
+    /// The control hairline is the web's `--control-line`, stronger than the
+    /// house border (envisioning/meet#599). Meet's colour fixture pins the same
+    /// numbers on all three of its surfaces.
+    func testControlBorderIsStrongerThanTheHouseBorder() {
+        let dark = EnvisioningSurface.Token.controlBorder.rgba(dark: true)
+        let light = EnvisioningSurface.Token.controlBorder.rgba(dark: false)
+        XCTAssertEqual(dark.alpha, 0.22, accuracy: 0.0001)
+        XCTAssertEqual(light.alpha, 0.24, accuracy: 0.0001)
+        XCTAssertGreaterThan(dark.alpha, EnvisioningSurface.Token.border.rgba(dark: true).alpha)
+        XCTAssertGreaterThan(light.alpha, EnvisioningSurface.Token.border.rgba(dark: false).alpha)
+    }
+
     /// Black on the brand fill is the whole contract. If someone edits the lime,
     /// this is the guard that the ink is still legible on it.
     func testInkClearsAAOnEveryAccentState() {
