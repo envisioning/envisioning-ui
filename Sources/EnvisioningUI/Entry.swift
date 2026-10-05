@@ -15,15 +15,19 @@ public struct EnvisioningEntryGate<SignedOut: View, Workspace: View>: View {
     private let phase: EnvisioningEntryPhase
     private let signedOut: SignedOut
     private let workspace: Workspace
+    /// The product's own mark for the transition; nil draws the Envisioning mark.
+    private let mark: AnyView?
 
     public init(
         productName: String,
         phase: EnvisioningEntryPhase,
+        mark: AnyView? = nil,
         @ViewBuilder signedOut: () -> SignedOut,
         @ViewBuilder workspace: () -> Workspace
     ) {
         self.productName = productName
         self.phase = phase
+        self.mark = mark
         self.signedOut = signedOut()
         self.workspace = workspace()
     }
@@ -34,7 +38,7 @@ public struct EnvisioningEntryGate<SignedOut: View, Workspace: View>: View {
             signedOut
                 .accessibilityIdentifier("envisioning.entry.signed-out")
         case .preparingWorkspace:
-            EnvisioningWorkspaceTransition(productName: productName)
+            EnvisioningWorkspaceTransition(productName: productName, mark: mark)
                 .accessibilityIdentifier("envisioning.entry.preparing-workspace")
         case .ready:
             workspace

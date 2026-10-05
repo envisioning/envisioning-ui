@@ -9,6 +9,8 @@ public struct EnvisioningWelcomeShell<Content: View>: View {
     private let content: Content
     private let showsVersionLine: Bool
     private let environment: String?
+    /// The product's own mark; nil draws the Envisioning mark.
+    private let mark: AnyView?
 
     /// `environment` names the server this build talks to ("Production",
     /// "Local", a host). It is the first thing anybody is asked when they report
@@ -18,8 +20,10 @@ public struct EnvisioningWelcomeShell<Content: View>: View {
         subtitle: String,
         showsVersionLine: Bool = true,
         environment: String? = nil,
+        mark: AnyView? = nil,
         @ViewBuilder content: () -> Content
     ) {
+        self.mark = mark
         self.productName = productName
         self.subtitle = subtitle
         self.showsVersionLine = showsVersionLine
@@ -38,7 +42,11 @@ public struct EnvisioningWelcomeShell<Content: View>: View {
                 Spacer(minLength: 56)
 
                 VStack(spacing: 12) {
-                    EnvisioningMark.view(size: 44)
+                    if let mark {
+                        mark.frame(width: 44, height: 44).accessibilityHidden(true)
+                    } else {
+                        EnvisioningMark.view(size: 44)
+                    }
 
                     Text(productName)
                         .font(EnvisioningFont.octa(32, weight: .medium))
@@ -108,14 +116,21 @@ public struct EnvisioningVersionLine: View {
 /// first signed-in surface is ready.
 public struct EnvisioningWorkspaceTransition: View {
     private let productName: String
+    /// The product's own mark; nil draws the Envisioning mark.
+    private let mark: AnyView?
 
-    public init(productName: String) {
+    public init(productName: String, mark: AnyView? = nil) {
         self.productName = productName
+        self.mark = mark
     }
 
     public var body: some View {
         VStack(spacing: 16) {
-            EnvisioningMark.view(size: 36)
+            if let mark {
+                mark.frame(width: 36, height: 36).accessibilityHidden(true)
+            } else {
+                EnvisioningMark.view(size: 36)
+            }
             ProgressView()
             Text("Opening \(productName)…")
                 .font(.headline)
